@@ -23,6 +23,10 @@ def handle_mention(event, say):
     reply_text = SlackChannel().handle(event)
     say(text=f"{reply_text}", thread_ts=ts)
 
+@app.event("message")
+def handle_message_events(body, logger):
+        logger.info(body)
+
 class SlackChannel(Channel):
     def startup(self):
         handler.start()
