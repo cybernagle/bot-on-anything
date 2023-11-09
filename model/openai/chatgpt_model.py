@@ -39,7 +39,7 @@ class ChatGPTModel(Model):
             #     return self.reply_text_stream(query, new_query, from_user_id)
 
             reply_content = self.reply_text(new_query, from_user_id, 0)
-            #log.debug("[CHATGPT] new_query={}, user={}, reply_cont={}".format(new_query, from_user_id, reply_content))
+            log.debug("[CHATGPT] new_query={}, user={}, reply_cont={}".format(new_query, from_user_id, reply_content))
             return reply_content
 
         elif context.get('type', None) == 'IMAGE_CREATE':
@@ -56,8 +56,6 @@ class ChatGPTModel(Model):
                 frequency_penalty=model_conf(const.OPEN_AI).get("frequency_penalty", 0.0),  # [-2,2]之间，该值越大则越降低模型一行中的重复用词，更倾向于产生不同的内容
                 presence_penalty=model_conf(const.OPEN_AI).get("presence_penalty", 1.0)  # [-2,2]之间，该值越大则越不受输入限制，将鼓励模型生成输入中不存在的新词，更倾向于产生不同的内容
                 )
-
-            print(response)
 
             reply_content = response.choices[0].message.content
             used_token = response.usage.total_tokens
